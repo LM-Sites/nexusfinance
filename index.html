@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Finance | Gestão Inteligente</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg: #0b0f1a;
+            --card: #161b2a;
+            --primary: #6366f1;
+            --success: #10b981;
+            --danger: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --input-bg: #0f172a;
+            --mercadopago: #009ee3;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        /* --- CONTAINER DE AUTENTICAÇÃO --- */
+        .auth-card {
+            width: 100%;
+            max-width: 400px;
+            background: var(--card);
+            padding: 30px;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.6);
+        }
+
+        .auth-screen { display: none; }
+        .auth-screen.active { display: block; animation: fadeIn 0.5s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header { text-align: center; margin-bottom: 30px; }
+        header h1 { font-weight: 800; font-size: 1.8rem; letter-spacing: -1px; }
+        header span { color: var(--primary); }
+        header p { color: var(--text-muted); font-size: 0.85rem; margin-top: 8px; }
+
+        .input-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: var(--text-main); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding-left: 45px; }
+        
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .input-wrapper i {
+            color: var(--primary);
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        input, select {
+            flex: 1;
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--input-bg);
+            border: 1px solid #2d3748;
+            border-radius: 12px;
+            color: white;
+            outline: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus { border-color: var(--primary); background: #131c31; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1); }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .btn:hover { background: #4f46e5; transform: scale(1.01); }
+        
+        .auth-screen .btn-submit {
+            margin-left: auto;
+            width: calc(100% - 39px);
+        }
+
+        /* --- BOTÃO DE APOIO PADRONIZADO --- */
+        .support-container {
+            margin-top: 30px;
+            padding: 20px;
+            text-align: center;
+            border-radius: 20px;
+            border: 1px dashed var(--primary);
+            background: linear-gradient(to bottom, rgba(99, 102, 241, 0.05), transparent);
+        }
+
+        .support-container h3 { font-size: 1rem; margin-bottom: 5px; }
+        .support-container p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; }
+
+        .btn-mp { 
+            background: var(--mercadopago); 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 8px; 
+            width: auto !important; 
+            padding: 12px 30px; 
+            font-size: 0.85rem;
+            margin: 0 auto;
+        }
+        .btn-mp:hover { background: #0087c1; }
+
+        .auth-footer {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            padding-left: 39px;
+        }
+
+        .auth-footer span {
+            color: var(--primary);
+            cursor: pointer;
+            font-weight: 700;
+            margin-left: 5px;
+        }
+
+        /* --- DASHBOARD --- */
+        .app-container { width: 100%; max-width: 1100px; display: none; margin-top: 40px; }
+        .app-container.active { display: block; }
+        .nav-app { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-bottom: 40px; }
+        .card-box { background: var(--card); padding: 30px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.05); }
+        .main-grid { display: grid; grid-template-columns: 1fr 1.8fr; gap: 30px; }
+        .history-item { display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; background: rgba(255,255,255,0.02); border-radius: 16px; margin-bottom: 12px; }
+
+        .support-section-dash {
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 900px) { 
+            .main-grid { grid-template-columns: 1fr; } 
+            body { align-items: flex-start; } 
+            .auth-screen .btn-submit { width: 100%; margin-left: 0; } 
+            .auth-footer { padding-left: 0; } 
+            label { padding-left: 0; } 
+        }
+    </style>
+</head>
+<body>
+
+    <div id="auth-wrapper" class="auth-card active">
+        
+        <div id="login-screen" class="auth-screen active">
+            <header>
+                <h1>Nexus<span>Finance</span></h1>
+                <p>Bem-vindo de volta!</p>
+            </header>
+            
+            <div class="input-group">
+                <label>E-mail</label>
+                <div class="input-wrapper">
+                    <i data-lucide="mail"></i>
+                    <input type="email" id="login-email" placeholder="seu@email.com">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Senha</label>
+                <div class="input-wrapper">
+                    <i data-lucide="lock"></i>
+                    <input type="password" id="login-pass" placeholder="••••••••">
+                </div>
+            </div>
+
+            <button class="btn btn-submit" onclick="handleLogin()">Acessar Conta</button>
+
+            <div class="auth-footer">
+                Não tem conta? <span onclick="toggleAuth('register-screen')">Registrar</span>
+            </div>
+
+            <div class="support-container">
+                <h3>Apoie o Projeto 🚀</h3>
+                <p>Ajude-nos a manter o projeto vivo!</p>
+                <a href="https://mpago.la/1K43Rnr" target="_blank" class="btn btn-mp">
+                    <i data-lucide="heart"></i>
+                    Apoiar via Mercado Pago
+                </a>
+            </div>
+        </div>
+
+        <div id="register-screen" class="auth-screen">
+            <header>
+                <h1>Nova<span>Conta</span></h1>
+                <p>Comece sua gestão hoje</p>
+            </header>
+
+            <div class="input-group">
+                <label>Nome</label>
+                <div class="input-wrapper">
+                    <i data-lucide="user"></i>
+                    <input type="text" id="reg-name" placeholder="Seu nome">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>E-mail</label>
+                <div class="input-wrapper">
+                    <i data-lucide="mail"></i>
+                    <input type="email" id="reg-email" placeholder="seu@email.com">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Senha</label>
+                <div class="input-wrapper">
+                    <i data-lucide="lock"></i>
+                    <input type="password" id="reg-pass" placeholder="Senha forte">
+                </div>
+            </div>
+
+            <button class="btn btn-submit" onclick="handleRegister()">Criar Agora</button>
+
+            <div class="auth-footer">
+                Já é membro? <span onclick="toggleAuth('login-screen')">Login</span>
+            </div>
+
+            <div class="support-container">
+                <h3>Apoie o Projeto 🚀</h3>
+                <p>Ajude-nos a manter o projeto vivo!</p>
+                <a href="https://mpago.la/1K43Rnr" target="_blank" class="btn btn-mp">
+                    <i data-lucide="heart"></i>
+                    Apoiar via Mercado Pago
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="app-screen" class="app-container">
+        <div class="nav-app">
+            <h2 id="user-name-display" style="font-weight: 800;">Olá, Usuário</h2>
+            <button onclick="handleLogout()" style="background: rgba(239, 68, 68, 0.1); border: 1px solid var(--danger); color: var(--danger); padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 600;">Sair</button>
+        </div>
+
+        <div class="summary">
+            <div class="card-box" style="border-bottom: 4px solid var(--success);">
+                <small style="color: var(--text-muted); font-weight: 600;">GANHOS</small>
+                <h2 id="in-val" style="color: var(--success); margin-top: 5px;">R$ 0,00</h2>
+            </div>
+            <div class="card-box" style="border-bottom: 4px solid var(--danger);">
+                <small style="color: var(--text-muted); font-weight: 600;">DESPESAS</small>
+                <h2 id="out-val" style="color: var(--danger); margin-top: 5px;">R$ 0,00</h2>
+            </div>
+            <div class="card-box">
+                <small style="color: var(--text-muted); font-weight: 600;">SALDO</small>
+                <h2 id="total-val" style="margin-top: 5px;">R$ 0,00</h2>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <div class="card-box">
+                <h3 style="margin-bottom: 20px">Nova Transação</h3>
+                <div class="input-group" style="margin-bottom: 10px;">
+                    <input type="text" id="t-desc" placeholder="Descrição">
+                </div>
+                <div class="input-group" style="margin-bottom: 10px;">
+                    <input type="number" id="t-amount" placeholder="Valor">
+                </div>
+                <div class="input-group" style="margin-bottom: 10px;">
+                    <select id="t-type">
+                        <option value="in">Entrada (+)</option>
+                        <option value="out">Saída (-)</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="addTransaction()" style="width: 100%; margin-top: 5px;">Salvar</button>
+            </div>
+
+            <div class="card-box">
+                <h3 style="margin-bottom: 20px">Histórico</h3>
+                <div id="history"></div>
+            </div>
+
+            <div class="support-container support-section-dash">
+                <h3>Apoie o Projeto 🚀</h3>
+                <p>Ajude-nos a manter o projeto vivo!</p>
+                <a href="https://mpago.la/1K43Rnr" target="_blank" class="btn btn-mp">
+                    <i data-lucide="heart"></i>
+                    Apoiar via Mercado Pago
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        let currentUser = null;
+
+        function toggleAuth(screenId) {
+            document.querySelectorAll('.auth-screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            lucide.createIcons();
+        }
+
+        function handleRegister() {
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value.toLowerCase().trim();
+            const pass = document.getElementById('reg-pass').value;
+            if(!name || !email || !pass) return alert("Preencha tudo!");
+            let users = JSON.parse(localStorage.getItem('nexus_users') || "[]");
+            if(users.find(u => u.email === email)) return alert("E-mail já existe.");
+            users.push({ name, email, pass, transactions: [] });
+            localStorage.setItem('nexus_users', JSON.stringify(users));
+            alert("Conta criada!");
+            toggleAuth('login-screen');
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('login-email').value.toLowerCase().trim();
+            const pass = document.getElementById('login-pass').value;
+            let users = JSON.parse(localStorage.getItem('nexus_users') || "[]");
+            const user = users.find(u => u.email === email && u.pass === pass);
+            if(user) {
+                currentUser = user;
+                document.getElementById('auth-wrapper').style.display = 'none';
+                document.getElementById('app-screen').classList.add('active');
+                document.getElementById('user-name-display').innerText = `Olá, ${user.name.split(' ')[0]}`;
+                updateUI();
+                lucide.createIcons();
+            } else { alert("E-mail ou senha inválidos."); }
+        }
+
+        function handleLogout() { location.reload(); }
+
+        function addTransaction() {
+            const desc = document.getElementById('t-desc').value;
+            const amount = parseFloat(document.getElementById('t-amount').value);
+            const type = document.getElementById('t-type').value;
+            if(!desc || isNaN(amount)) return alert("Dados inválidos.");
+            const transaction = { id: Date.now(), desc, amount, type, date: new Date().toLocaleDateString() };
+            let users = JSON.parse(localStorage.getItem('nexus_users'));
+            const idx = users.findIndex(u => u.email === currentUser.email);
+            users[idx].transactions.push(transaction);
+            localStorage.setItem('nexus_users', JSON.stringify(users));
+            currentUser = users[idx];
+            updateUI();
+            document.getElementById('t-desc').value = "";
+            document.getElementById('t-amount').value = "";
+        }
+
+        function updateUI() {
+            const historyDiv = document.getElementById('history');
+            const inDisplay = document.getElementById('in-val');
+            const outDisplay = document.getElementById('out-val');
+            const totalDisplay = document.getElementById('total-val');
+            historyDiv.innerHTML = "";
+            let tIn = 0, tOut = 0;
+            if(currentUser.transactions) {
+                [...currentUser.transactions].reverse().forEach(t => {
+                    if(t.type === 'in') tIn += t.amount; else tOut += t.amount;
+                    historyDiv.innerHTML += `
+                        <div class="history-item">
+                            <div>
+                                <strong style="display:block">${t.desc}</strong>
+                                <small style="color:var(--text-muted)">${t.date}</small>
+                            </div>
+                            <div style="font-weight:700; color:${t.type === 'in' ? 'var(--success)' : 'var(--danger)'}">
+                                ${t.type === 'in' ? '+' : '-'} R$ ${t.amount.toFixed(2)}
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            inDisplay.innerText = `R$ ${tIn.toFixed(2)}`;
+            outDisplay.innerText = `R$ ${tOut.toFixed(2)}`;
+            totalDisplay.innerText = `R$ ${(tIn - tOut).toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
