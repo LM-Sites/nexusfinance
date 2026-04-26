@@ -33,7 +33,7 @@
             padding: 15px;
         }
 
-        /* --- CONTAINER DE AUTENTICAÇÃO --- */
+        /* --- AUTH CARD --- */
         .auth-card {
             width: 100%;
             max-width: 400px;
@@ -60,161 +60,125 @@
         .input-group { margin-bottom: 20px; }
         label { display: block; margin-bottom: 8px; color: var(--text-main); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding-left: 45px; }
         
-        .input-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .input-wrapper i {
-            color: var(--primary);
-            width: 24px;
-            height: 24px;
-            flex-shrink: 0;
-        }
+        .input-wrapper { display: flex; align-items: center; gap: 15px; }
+        .input-wrapper i { color: var(--primary); width: 24px; height: 24px; flex-shrink: 0; }
 
         input, select {
-            flex: 1;
-            width: 100%;
-            padding: 14px 18px;
-            background: var(--input-bg);
-            border: 1px solid #2d3748;
-            border-radius: 12px;
-            color: white;
-            outline: none;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
+            flex: 1; width: 100%; padding: 14px 18px; background: var(--input-bg);
+            border: 1px solid #2d3748; border-radius: 12px; color: white;
+            outline: none; font-size: 0.95rem; transition: all 0.3s ease;
         }
-
         input:focus { border-color: var(--primary); background: #131c31; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1); }
 
         .btn {
-            width: 100%;
-            padding: 16px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-            font-size: 0.95rem;
-            text-decoration: none;
-            display: block;
-            text-align: center;
+            width: 100%; padding: 16px; background: var(--primary); color: white;
+            border: none; border-radius: 12px; font-weight: 700; cursor: pointer;
+            transition: all 0.3s ease; margin-top: 10px; font-size: 0.95rem;
+            text-decoration: none; display: block; text-align: center;
         }
-
         .btn:hover { background: #4f46e5; transform: scale(1.01); }
-        
-        .auth-screen .btn-submit {
-            margin-left: auto;
-            width: calc(100% - 39px);
+
+        .btn-outline {
+            background: transparent; border: 1px solid #2d3748; color: var(--text-muted);
+            padding: 10px; font-size: 0.8rem; margin-top: 20px;
         }
 
-        /* --- BOTÃO DE APOIO PADRONIZADO --- */
-        .support-container {
-            margin-top: 30px;
+        /* --- MODAL POLÍTICAS --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+            display: none; justify-content: center; align-items: center; z-index: 1000;
             padding: 20px;
-            text-align: center;
-            border-radius: 20px;
-            border: 1px dashed var(--primary);
-            background: linear-gradient(to bottom, rgba(99, 102, 241, 0.05), transparent);
         }
-
-        .support-container h3 { font-size: 1rem; margin-bottom: 5px; }
-        .support-container p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; }
-
-        .btn-mp { 
-            background: var(--mercadopago); 
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 8px; 
-            width: auto !important; 
-            padding: 12px 30px; 
-            font-size: 0.85rem;
-            margin: 0 auto;
+        .modal-content {
+            background: var(--card); max-width: 600px; width: 100%;
+            max-height: 80vh; overflow-y: auto; padding: 40px;
+            border-radius: 24px; border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
         }
-        .btn-mp:hover { background: #0087c1; }
-
-        .auth-footer {
-            margin-top: 15px;
-            text-align: center;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            padding-left: 39px;
-        }
-
-        .auth-footer span {
-            color: var(--primary);
-            cursor: pointer;
-            font-weight: 700;
-            margin-left: 5px;
-        }
+        .modal-content h2 { margin-bottom: 20px; color: var(--primary); }
+        .modal-content h3 { margin: 25px 0 10px 0; font-size: 1.1rem; border-left: 4px solid var(--primary); padding-left: 10px; }
+        .modal-content p, .modal-content li { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 10px; }
+        .modal-content ul { padding-left: 20px; }
+        .close-modal { position: absolute; top: 20px; right: 20px; cursor: pointer; color: var(--text-muted); }
 
         /* --- DASHBOARD --- */
-        .app-container { width: 100%; max-width: 1100px; display: none; margin-top: 40px; }
+        .app-container { width: 100%; max-width: 1100px; display: none; margin: 40px 0; }
         .app-container.active { display: block; }
         .nav-app { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
         .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-bottom: 40px; }
         .card-box { background: var(--card); padding: 30px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.05); }
         .main-grid { display: grid; grid-template-columns: 1fr 1.8fr; gap: 30px; }
-        .history-item { display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; background: rgba(255,255,255,0.02); border-radius: 16px; margin-bottom: 12px; }
-
-        .support-section-dash {
-            grid-column: 1 / -1;
+        
+        .history-item { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 18px 22px; background: rgba(255,255,255,0.02); 
+            border-radius: 16px; margin-bottom: 12px; 
         }
 
-        @media (max-width: 900px) { 
-            .main-grid { grid-template-columns: 1fr; } 
-            body { align-items: flex-start; } 
-            .auth-screen .btn-submit { width: 100%; margin-left: 0; } 
-            .auth-footer { padding-left: 0; } 
-            label { padding-left: 0; } 
+        .action-btn { background: transparent; border: none; cursor: pointer; padding: 5px; border-radius: 6px; }
+        .btn-edit { color: var(--primary); }
+        .btn-delete { color: var(--danger); }
+
+        .support-container {
+            margin-top: 30px; padding: 20px; text-align: center; border-radius: 20px;
+            border: 1px dashed var(--primary); background: linear-gradient(to bottom, rgba(99, 102, 241, 0.05), transparent);
         }
+        .btn-mp { background: var(--mercadopago); display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 30px; font-size: 0.85rem; margin-top: 15px; }
+
+        @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
+    <div id="modal-politicas" class="modal-overlay">
+        <div class="modal-content">
+            <i data-lucide="x" class="close-modal" onclick="closeModal()"></i>
+            <h2>🔐 Políticas e Termos de Uso</h2>
+            <p>Ao utilizar o Nexus Finance, o usuário concorda com as seguintes diretrizes:</p>
+            <ul>
+                <li><strong>Privacidade de Dados:</strong> O Nexus Finance é uma ferramenta baseada em LocalStorage. Todos os seus dados são salvos exclusivamente no seu navegador. Nós não temos acesso a esses dados em servidores externos.</li>
+                <li><strong>Segurança:</strong> Se você limpar o cache do navegador, as informações serão excluídas permanentemente. Recomendamos não usar senhas reais.</li>
+                <li><strong>Responsabilidade:</strong> Ferramenta de caráter informativo. Não nos responsabilizamos por decisões financeiras ou perda de dados.</li>
+                <li><strong>Uso Gratuito:</strong> O sistema é mantido por contribuições voluntárias.</li>
+            </ul>
+
+            <h3>🚀 Passo a Passo: Como Utilizar</h3>
+            <ol>
+                <li><strong>Criando sua Conta:</strong> Clique em "Registrar", preencha seus dados e faça o login.</li>
+                <li><strong>Dashboard:</strong> Acompanhe seus Ganhos (verde), Despesas (vermelho) e Saldo total.</li>
+                <li><strong>Transações:</strong> Preencha descrição, valor e tipo para salvar novos registros.</li>
+                <li><strong>Editar/Excluir:</strong> Use os ícones no histórico para ajustar ou remover entradas.</li>
+                <li><strong>Sair:</strong> Sempre clique em "Sair" para proteger seu acesso em computadores compartilhados.</li>
+            </ol>
+            <p style="margin-top:20px; background: rgba(99,102,241,0.1); padding: 15px; border-radius: 10px;">
+                <strong>Dica de Ouro 💡:</strong> O site funciona offline após o primeiro acesso, pois os dados são locais!
+            </p>
+            <button class="btn" onclick="closeModal()">Entendi</button>
+        </div>
+    </div>
+
     <div id="auth-wrapper" class="auth-card active">
-        
         <div id="login-screen" class="auth-screen active">
             <header>
                 <h1>Nexus<span>Finance</span></h1>
                 <p>Bem-vindo de volta!</p>
             </header>
-            
             <div class="input-group">
                 <label>E-mail</label>
-                <div class="input-wrapper">
-                    <i data-lucide="mail"></i>
-                    <input type="email" id="login-email" placeholder="seu@email.com">
-                </div>
+                <div class="input-wrapper"><i data-lucide="mail"></i><input type="email" id="login-email" placeholder="seu@email.com"></div>
             </div>
-
             <div class="input-group">
                 <label>Senha</label>
-                <div class="input-wrapper">
-                    <i data-lucide="lock"></i>
-                    <input type="password" id="login-pass" placeholder="••••••••">
-                </div>
+                <div class="input-wrapper"><i data-lucide="lock"></i><input type="password" id="login-pass" placeholder="••••••••"></div>
             </div>
-
-            <button class="btn btn-submit" onclick="handleLogin()">Acessar Conta</button>
-
-            <div class="auth-footer">
-                Não tem conta? <span onclick="toggleAuth('register-screen')">Registrar</span>
+            <button class="btn" onclick="handleLogin()">Acessar Conta</button>
+            <div style="text-align:center; margin-top:15px; font-size:0.85rem; color:var(--text-muted)">
+                Não tem conta? <span onclick="toggleAuth('register-screen')" style="color:var(--primary); cursor:pointer; font-weight:700">Registrar</span>
             </div>
-
-            <div class="support-container">
-                <h3>Apoie o Projeto 🚀</h3>
-                <p>Ajude-nos a manter o projeto vivo!</p>
-                <a href="https://mpago.la/1K43Rnr" target="_blank" class="btn btn-mp">
-                    <i data-lucide="heart"></i>
-                    Apoiar via Mercado Pago
-                </a>
-            </div>
+            <button class="btn btn-outline" onclick="openModal()">
+                <i data-lucide="info" style="width:14px; vertical-align:middle"></i> Ajuda & Políticas
+            </button>
         </div>
 
         <div id="register-screen" class="auth-screen">
@@ -222,100 +186,71 @@
                 <h1>Nova<span>Conta</span></h1>
                 <p>Comece sua gestão hoje</p>
             </header>
-
             <div class="input-group">
                 <label>Nome</label>
-                <div class="input-wrapper">
-                    <i data-lucide="user"></i>
-                    <input type="text" id="reg-name" placeholder="Seu nome">
-                </div>
+                <div class="input-wrapper"><i data-lucide="user"></i><input type="text" id="reg-name" placeholder="Seu nome"></div>
             </div>
-
             <div class="input-group">
                 <label>E-mail</label>
-                <div class="input-wrapper">
-                    <i data-lucide="mail"></i>
-                    <input type="email" id="reg-email" placeholder="seu@email.com">
-                </div>
+                <div class="input-wrapper"><i data-lucide="mail"></i><input type="email" id="reg-email" placeholder="seu@email.com"></div>
             </div>
-
             <div class="input-group">
                 <label>Senha</label>
-                <div class="input-wrapper">
-                    <i data-lucide="lock"></i>
-                    <input type="password" id="reg-pass" placeholder="Senha forte">
-                </div>
+                <div class="input-wrapper"><i data-lucide="lock"></i><input type="password" id="reg-pass" placeholder="Senha forte"></div>
             </div>
-
-            <button class="btn btn-submit" onclick="handleRegister()">Criar Agora</button>
-
-            <div class="auth-footer">
-                Já é membro? <span onclick="toggleAuth('login-screen')">Login</span>
-            </div>
-
-            <div class="support-container">
-                <h3>Apoie o Projeto 🚀</h3>
-                <p>Ajude-nos a manter o projeto vivo!</p>
-                <a href="https://mpago.la/1K43Rnr" target="_blank" class="btn btn-mp">
-                    <i data-lucide="heart"></i>
-                    Apoiar via Mercado Pago
-                </a>
+            <button class="btn" onclick="handleRegister()">Criar Agora</button>
+            <div style="text-align:center; margin-top:15px; font-size:0.85rem; color:var(--text-muted)">
+                Já é membro? <span onclick="toggleAuth('login-screen')" style="color:var(--primary); cursor:pointer; font-weight:700">Login</span>
             </div>
         </div>
     </div>
 
     <div id="app-screen" class="app-container">
         <div class="nav-app">
-            <h2 id="user-name-display" style="font-weight: 800;">Olá, Usuário</h2>
-            <button onclick="handleLogout()" style="background: rgba(239, 68, 68, 0.1); border: 1px solid var(--danger); color: var(--danger); padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 600;">Sair</button>
+            <h2 id="user-name-display" style="font-weight: 800;">Olá</h2>
+            <div style="display:flex; gap:10px">
+                <button onclick="openModal()" style="background: rgba(99,102,241,0.1); border: 1px solid var(--primary); color: var(--primary); padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 600;">Ajuda</button>
+                <button onclick="handleLogout()" style="background: rgba(239, 68, 68, 0.1); border: 1px solid var(--danger); color: var(--danger); padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 600;">Sair</button>
+            </div>
         </div>
 
         <div class="summary">
             <div class="card-box" style="border-bottom: 4px solid var(--success);">
-                <small style="color: var(--text-muted); font-weight: 600;">GANHOS</small>
-                <h2 id="in-val" style="color: var(--success); margin-top: 5px;">R$ 0,00</h2>
+                <small>GANHOS</small><h2 id="in-val" style="color:var(--success)">R$ 0,00</h2>
             </div>
             <div class="card-box" style="border-bottom: 4px solid var(--danger);">
-                <small style="color: var(--text-muted); font-weight: 600;">DESPESAS</small>
-                <h2 id="out-val" style="color: var(--danger); margin-top: 5px;">R$ 0,00</h2>
+                <small>DESPESAS</small><h2 id="out-val" style="color:var(--danger)">R$ 0,00</h2>
             </div>
             <div class="card-box">
-                <small style="color: var(--text-muted); font-weight: 600;">SALDO</small>
-                <h2 id="total-val" style="margin-top: 5px;">R$ 0,00</h2>
+                <small>SALDO</small><h2 id="total-val">R$ 0,00</h2>
             </div>
         </div>
 
         <div class="main-grid">
             <div class="card-box">
-                <h3 style="margin-bottom: 20px">Nova Transação</h3>
-                <div class="input-group" style="margin-bottom: 10px;">
-                    <input type="text" id="t-desc" placeholder="Descrição">
-                </div>
-                <div class="input-group" style="margin-bottom: 10px;">
-                    <input type="number" id="t-amount" placeholder="Valor">
-                </div>
-                <div class="input-group" style="margin-bottom: 10px;">
+                <h3 id="form-title">Nova Transação</h3>
+                <input type="hidden" id="t-id">
+                <div class="input-group"><input type="text" id="t-desc" placeholder="Descrição"></div>
+                <div class="input-group"><input type="number" id="t-amount" placeholder="Valor"></div>
+                <div class="input-group">
                     <select id="t-type">
                         <option value="in">Entrada (+)</option>
                         <option value="out">Saída (-)</option>
                     </select>
                 </div>
-                <button class="btn" onclick="addTransaction()" style="width: 100%; margin-top: 5px;">Salvar</button>
+                <button class="btn" id="btn-save" onclick="saveTransaction()">Salvar</button>
+                <button class="btn" id="btn-cancel-edit" onclick="resetForm()" style="background:#334155; display:none;">Cancelar</button>
             </div>
 
             <div class="card-box">
-                <h3 style="margin-bottom: 20px">Histórico</h3>
+                <h3>Histórico</h3>
                 <div id="history"></div>
             </div>
+        </div>
 
-            <div class="support-container support-section-dash">
-                <h3>Apoie o Projeto 🚀</h3>
-                <p>Ajude-nos a manter o projeto vivo!</p>
-                <a href="https://mpago.la/1K43Rnr" target="_blank" class="btn btn-mp">
-                    <i data-lucide="heart"></i>
-                    Apoiar via Mercado Pago
-                </a>
-            </div>
+        <div class="support-container">
+            <h3>Apoie o Projeto 🚀</h3>
+            <a href="https://mpago.la/1K43Rnr" target="_blank" class="btn btn-mp"><i data-lucide="heart"></i> Apoiar via Mercado Pago</a>
         </div>
     </div>
 
@@ -323,9 +258,12 @@
         lucide.createIcons();
         let currentUser = null;
 
-        function toggleAuth(screenId) {
+        function openModal() { document.getElementById('modal-politicas').style.display = 'flex'; }
+        function closeModal() { document.getElementById('modal-politicas').style.display = 'none'; }
+
+        function toggleAuth(id) {
             document.querySelectorAll('.auth-screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
+            document.getElementById(id).classList.add('active');
             lucide.createIcons();
         }
 
@@ -353,54 +291,86 @@
                 document.getElementById('app-screen').classList.add('active');
                 document.getElementById('user-name-display').innerText = `Olá, ${user.name.split(' ')[0]}`;
                 updateUI();
-                lucide.createIcons();
-            } else { alert("E-mail ou senha inválidos."); }
+            } else { alert("Dados inválidos."); }
         }
 
         function handleLogout() { location.reload(); }
 
-        function addTransaction() {
+        function saveTransaction() {
+            const id = document.getElementById('t-id').value;
             const desc = document.getElementById('t-desc').value;
             const amount = parseFloat(document.getElementById('t-amount').value);
             const type = document.getElementById('t-type').value;
             if(!desc || isNaN(amount)) return alert("Dados inválidos.");
-            const transaction = { id: Date.now(), desc, amount, type, date: new Date().toLocaleDateString() };
+
             let users = JSON.parse(localStorage.getItem('nexus_users'));
-            const idx = users.findIndex(u => u.email === currentUser.email);
-            users[idx].transactions.push(transaction);
+            const uIdx = users.findIndex(u => u.email === currentUser.email);
+
+            if(id) {
+                const tIdx = users[uIdx].transactions.findIndex(t => t.id == id);
+                users[uIdx].transactions[tIdx] = { ...users[uIdx].transactions[tIdx], desc, amount, type };
+            } else {
+                users[uIdx].transactions.push({ id: Date.now(), desc, amount, type, date: new Date().toLocaleDateString() });
+            }
+
             localStorage.setItem('nexus_users', JSON.stringify(users));
-            currentUser = users[idx];
+            currentUser = users[uIdx];
+            resetForm();
             updateUI();
+        }
+
+        function editTransaction(id) {
+            const t = currentUser.transactions.find(t => t.id === id);
+            document.getElementById('t-id').value = t.id;
+            document.getElementById('t-desc').value = t.desc;
+            document.getElementById('t-amount').value = t.amount;
+            document.getElementById('t-type').value = t.type;
+            document.getElementById('form-title').innerText = "Editar Transação";
+            document.getElementById('btn-save').innerText = "Atualizar";
+            document.getElementById('btn-cancel-edit').style.display = "block";
+        }
+
+        function deleteTransaction(id) {
+            if(!confirm("Excluir transação?")) return;
+            let users = JSON.parse(localStorage.getItem('nexus_users'));
+            const uIdx = users.findIndex(u => u.email === currentUser.email);
+            users[uIdx].transactions = users[uIdx].transactions.filter(t => t.id !== id);
+            localStorage.setItem('nexus_users', JSON.stringify(users));
+            currentUser = users[uIdx];
+            updateUI();
+        }
+
+        function resetForm() {
+            document.getElementById('t-id').value = "";
             document.getElementById('t-desc').value = "";
             document.getElementById('t-amount').value = "";
+            document.getElementById('form-title').innerText = "Nova Transação";
+            document.getElementById('btn-save').innerText = "Salvar";
+            document.getElementById('btn-cancel-edit').style.display = "none";
         }
 
         function updateUI() {
-            const historyDiv = document.getElementById('history');
-            const inDisplay = document.getElementById('in-val');
-            const outDisplay = document.getElementById('out-val');
-            const totalDisplay = document.getElementById('total-val');
-            historyDiv.innerHTML = "";
+            const hist = document.getElementById('history');
+            hist.innerHTML = "";
             let tIn = 0, tOut = 0;
-            if(currentUser.transactions) {
-                [...currentUser.transactions].reverse().forEach(t => {
-                    if(t.type === 'in') tIn += t.amount; else tOut += t.amount;
-                    historyDiv.innerHTML += `
-                        <div class="history-item">
-                            <div>
-                                <strong style="display:block">${t.desc}</strong>
-                                <small style="color:var(--text-muted)">${t.date}</small>
-                            </div>
-                            <div style="font-weight:700; color:${t.type === 'in' ? 'var(--success)' : 'var(--danger)'}">
-                                ${t.type === 'in' ? '+' : '-'} R$ ${t.amount.toFixed(2)}
-                            </div>
+            [...currentUser.transactions].reverse().forEach(t => {
+                if(t.type === 'in') tIn += t.amount; else tOut += t.amount;
+                hist.innerHTML += `
+                    <div class="history-item">
+                        <div><strong>${t.desc}</strong><br><small>${t.date}</small></div>
+                        <div style="display:flex; align-items:center; gap:10px">
+                            <span style="font-weight:700; color:${t.type === 'in' ? 'var(--success)' : 'var(--danger)'}">
+                                R$ ${t.amount.toFixed(2)}
+                            </span>
+                            <button class="action-btn btn-edit" onclick="editTransaction(${t.id})"><i data-lucide="edit-2" style="width:16px"></i></button>
+                            <button class="action-btn btn-delete" onclick="deleteTransaction(${t.id})"><i data-lucide="trash-2" style="width:16px"></i></button>
                         </div>
-                    `;
-                });
-            }
-            inDisplay.innerText = `R$ ${tIn.toFixed(2)}`;
-            outDisplay.innerText = `R$ ${tOut.toFixed(2)}`;
-            totalDisplay.innerText = `R$ ${(tIn - tOut).toFixed(2)}`;
+                    </div>`;
+            });
+            document.getElementById('in-val').innerText = `R$ ${tIn.toFixed(2)}`;
+            document.getElementById('out-val').innerText = `R$ ${tOut.toFixed(2)}`;
+            document.getElementById('total-val').innerText = `R$ ${(tIn - tOut).toFixed(2)}`;
+            lucide.createIcons();
         }
     </script>
 </body>
